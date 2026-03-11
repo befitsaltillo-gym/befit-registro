@@ -212,6 +212,46 @@
   .privacy p { font-size: 12px; color: #777; line-height: 1.5; }
   .privacy a { color: var(--blue-light); text-decoration: none; }
 
+  /* ── CUSTOM CHECKBOX ── */
+  .check-wrap {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .check-wrap input[type="checkbox"] {
+    display: none !important;
+  }
+  .check-box {
+    width: 22px; height: 22px;
+    min-width: 22px;
+    border-radius: 6px;
+    border: 2px solid #555;
+    background: #111;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .2s;
+    margin-top: 15px;
+    flex-shrink: 0;
+  }
+  .check-box .check-icon {
+    display: none;
+    margin-top: 15px;
+    width: 12px; height: 8px;
+    border-left: 2.5px solid #fff;
+    border-bottom: 2.5px solid #fff;
+    transform: rotate(-45deg) translateY(-2px);
+  }
+  .check-wrap input[type="checkbox"]:checked ~ .check-box {
+    background: var(--red);
+    border-color: var(--red);
+    box-shadow: 0 0 8px rgba(204,31,31,.4);
+  }
+  .check-wrap input[type="checkbox"]:checked ~ .check-box .check-icon {
+    display: block;
+  }
+  .check-label { font-size: 8px; color: #777; line-height: 1.55; margin-top: 15px; }
+
   /* ── TOOLTIP ── */
   .tooltip-wrap { position: relative; display: inline-flex; }
   .info-btn {
@@ -343,23 +383,12 @@
 <div class="hero">
   <div class="hero-inner">
     <div class="hex-logo">
-      <svg viewBox="0 0 100 115" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <polygon points="50,4 96,28 96,87 50,111 4,87 4,28"
-                 fill="#000" stroke="#1e4a9e" stroke-width="5"/>
-        <polygon points="50,12 88,33 88,82 50,103 12,82 12,33"
-                 fill="#000" stroke="#cc1f1f" stroke-width="3"/>
-        <polygon points="50,17 84,36 84,79 50,98 16,79 16,36"
-                 fill="#0a0a0a" stroke="#fff" stroke-width="1.2"/>
-        <text x="50" y="72" text-anchor="middle" font-size="42">💪</text>
-      </svg>
-    </div>
-    <div class="hero-text">
-      <div class="brand-name"><span class="be">Be</span><span class="fit">Fit</span></div>
-      <p class="hero-sub">Pre-Inscripción</p>
+      <!-- Reemplaza ./logo.png con el nombre real de tu imagen -->
+      <img src="./BeFit.png" alt="BeFit Logo" style="margin-top: -20px; width:200px;height:200px;object-fit:contain;"/>
     </div>
   </div>
-  <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:10px">
-    <span class="badge">✦ Próxima apertura</span>
+  <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:-20px">
+    <span class="badge">✦ Pre-Inscripción </br> ✦ Próxima apertura</span>
     <div class="tooltip-wrap">
       <button class="info-btn" aria-label="Más información">i</button>
       <div class="tooltip-box">
@@ -482,10 +511,11 @@
     </div>
 
     <!-- PRIVACIDAD -->
-    <div class="privacy">
+    <label class="check-wrap" for="privacidad">
       <input type="checkbox" id="privacidad"/>
-      <p>Acepto que mis datos sean utilizados por BeFit Gym exclusivamente para el proceso de inscripción. No serán compartidos con terceros. <a href="#">Aviso de privacidad.</a></p>
-    </div>
+      <span class="check-box"><span class="check-icon"></span></span>
+      <p class="check-label">Acepto que mis datos sean utilizados por BeFit Gym exclusivamente para el proceso de inscripción. No serán compartidos con terceros.</p>
+    </label>
     <span class="err-msg" id="err-privacidad" style="margin-top:6px">Debes aceptar el aviso de privacidad</span>
 
     <button type="submit" class="btn" id="btn">
@@ -574,7 +604,6 @@ function validate() {
 
   if (!$('privacidad').checked) { $('err-privacidad').classList.add('show'); ok = false; }
   else $('err-privacidad').classList.remove('show');
-
   return ok;
 }
 
