@@ -231,7 +231,7 @@
     background: #111;
     display: flex; align-items: center; justify-content: center;
     transition: all .2s;
-    margin-top: 15px;
+    margin-top: 1px;
     flex-shrink: 0;
   }
   .check-box .check-icon {
@@ -241,7 +241,6 @@
     border-bottom: 2.5px solid #fff;
     transform: rotate(-45deg) translateY(-2px);
   }
-  
   .check-wrap input[type="checkbox"]:checked ~ .check-box {
     background: var(--red);
     border-color: var(--red);
@@ -250,7 +249,8 @@
   .check-wrap input[type="checkbox"]:checked ~ .check-box .check-icon {
     display: block;
   }
-  .check-label { font-size: 8px; color: #777; line-height: 1.55; margin-top: 15px; }
+  .check-label { font-size: 12px; color: #777; line-height: 1.55; }
+  .check-label a { color: var(--blue-light); text-decoration: none; }
 
   /* ── TOOLTIP ── */
   .tooltip-wrap { position: relative; display: inline-flex; }
@@ -384,11 +384,15 @@
   <div class="hero-inner">
     <div class="hex-logo">
       <!-- Reemplaza ./logo.png con el nombre real de tu imagen -->
-      <img src="./BeFit.png" alt="BeFit Logo" style="margin-top: -20px; width:200px;height:200px;object-fit:contain;"/>
+      <img src="./logo.png" alt="BeFit Logo" style="width:52px;height:52px;object-fit:contain;"/>
+    </div>
+    <div class="hero-text">
+      <div class="brand-name"><span class="be">Be</span><span class="fit">Fit</span></div>
+      <p class="hero-sub">Pre-Inscripción</p>
     </div>
   </div>
-  <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:-20px">
-    <span class="badge">✦ Pre-Inscripción </br> ✦ Próxima apertura</span>
+  <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:10px">
+    <span class="badge">✦ Próxima apertura</span>
     <div class="tooltip-wrap">
       <button class="info-btn" aria-label="Más información">i</button>
       <div class="tooltip-box">
@@ -514,7 +518,7 @@
     <label class="check-wrap" for="privacidad">
       <input type="checkbox" id="privacidad"/>
       <span class="check-box"><span class="check-icon"></span></span>
-      <p class="check-label">Acepto que mis datos sean utilizados por BeFit Gym exclusivamente para el proceso de inscripción. No serán compartidos con terceros.</p>
+      <span class="check-label">Acepto que mis datos sean utilizados por BeFit Gym exclusivamente para el proceso de inscripción. No serán compartidos con terceros. <a href="#">Aviso de privacidad.</a></span>
     </label>
     <span class="err-msg" id="err-privacidad" style="margin-top:6px">Debes aceptar el aviso de privacidad</span>
 
