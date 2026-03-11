@@ -1,5 +1,4 @@
 exports.handler = async (event) => {
-  // Solo aceptar POST
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
@@ -14,17 +13,19 @@ exports.handler = async (event) => {
       throw new Error('Variable de entorno APPS_SCRIPT_URL no configurada');
     }
 
-    // Reenviar el payload a Google Apps Script
     const response = await fetch(APPS_SCRIPT_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: event.body,
     });
 
+    // Leer y reenviar la respuesta de Apps Script al formulario
+    const result = await response.text();
+
     return {
       statusCode: 200,
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ status: 'ok' }),
+      body: result, // puede ser: { status: 'ok' | 'duplicate' | 'error' }
     };
 
   } catch (err) {
@@ -34,4 +35,3 @@ exports.handler = async (event) => {
     };
   }
 };
-
