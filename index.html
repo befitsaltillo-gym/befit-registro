@@ -642,24 +642,41 @@ $('form').addEventListener('submit', async e => {
   $('spinner').style.display = 'block';
 
   try {
-    if (APPS_SCRIPT_URL === 'TU_APPS_SCRIPT_URL_AQUI') {
+    // Modo local (abrir archivo directo sin servidor)
+    if (window.location.protocol === 'file:') {
       await new Promise(r => setTimeout(r, 1200));
       console.table(payload);
-    } else {
-      await fetch(APPS_SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
+      $('form').style.display    = 'none';
+      $('success').style.display = 'block';
+      return;
     }
-    $('form').style.display = 'none';
+
+    const res    = await fetch(APPS_SCRIPT_URL, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(payload),
+    });
+    const result = await res.json();
+
+    if (result.status === 'duplicate') {
+      showErr('email', '⚠️ Este correo ya está registrado.');
+      $('email').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      $('btn').disabled          = false;
+      $('btn-text').style.display = 'block';
+      $('spinner').style.display  = 'none';
+      return;
+    }
+
+    if (result.status !== 'ok') throw new Error(result.message);
+
+    $('form').style.display    = 'none';
     $('success').style.display = 'block';
+
   } catch {
     showToast('Error al enviar. Verifica tu conexión e intenta de nuevo.');
-    $('btn').disabled = false;
+    $('btn').disabled          = false;
     $('btn-text').style.display = 'block';
-    $('spinner').style.display = 'none';
+    $('spinner').style.display  = 'none';
   }
 });
 </script>
